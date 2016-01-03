@@ -14,7 +14,8 @@ Route::group(['middleware' => ['web']], function () {
     // Admin routes...
     Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
 
-        Route::get('/', 'DashbordController@index');
+        Route::get('/', 'DashbordController@index')->name('admin.dashbord');
+        Route::resource('category','CategoriesController');
 
     });
 
