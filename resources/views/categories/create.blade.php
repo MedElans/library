@@ -1,4 +1,4 @@
-@section('title', 'Catégories')
+@section('title', 'Nouvelle catégorie')
 @extends('layout')
 
 @section('content')

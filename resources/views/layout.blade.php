@@ -10,7 +10,8 @@
         <ul>
             <li><a href="{{ route('admin.dashbord') }}">Tableau de bord</a></li>
             <li><a href="{{ route('admin.category.index') }}">Catégories</a></li>
-            <li>Sources</li>
+            <li><a href="{{ route('admin.unit.index') }}">Unités</a></li>
+            <li><a href="{{ route('admin.source.index') }}">Sources</a></li>
             <li>Livres</li>
             <li>Formations</li>
             <li>Articles</li>

@@ -46,8 +46,8 @@ class CategoriesController extends Controller
         else
         {
             $root = Category::where(['id' => $request->all()['parentId']])->first();
-            $child2 = Category::create(['name' => $request->all()['name']]);
-            $child2->makeChildOf($root);
+            $child = Category::create(['name' => $request->all()['name']]);
+            $child->makeChildOf($root);
         }
         return redirect(route('admin.category.index'));
     }
@@ -60,19 +60,9 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
+        $categories = Category::lists('name', 'id');
         $category = Category::where(['id' => $id])->first();
-        return view('categories.show', compact('category'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('categories.show', compact('category', 'categories'));
     }
 
     /**
@@ -84,7 +74,18 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        if(empty($request->all()['parentId']))
+        {
+            $category->fill(['name' => $request->all()['name']])->save();
+        }
+        else
+        {
+            $root = Category::where(['id' => $request->all()['parentId']])->first();
+            $category->fill(['name' => $request->all()['name']])->save();
+            $category->makeChildOf($root);
+        }
+        return redirect(route('admin.category.index'));
     }
 
     /**
@@ -95,6 +96,8 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        return redirect(route('admin.category.index'));
+
     }
 }

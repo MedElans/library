@@ -16,6 +16,8 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::get('/', 'DashbordController@index')->name('admin.dashbord');
         Route::resource('category','CategoriesController');
+        Route::resource('unit','UnitsController');
+        Route::resource('source','SourcesController');
 
     });
 
