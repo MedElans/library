@@ -23,7 +23,6 @@ Route::group(['middleware' => ['web']], function () {
 
     // Guest routes...
     Route::get('/', function(){
-        Auth::logout();
-        return 'Hello world! <a href='. route('login') .'>Login</a>';
+        return view('guest.presentation');
     });
 });

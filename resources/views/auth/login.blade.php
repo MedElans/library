@@ -1,22 +1,31 @@
-<form method="POST" action="">
-    {!! csrf_field() !!}
+@extends('guest')
+@section('title', 'Connexion')
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
-    </div>
+@section('styles')
+    <link rel="stylesheet" href="{{ URL::asset('../resources/assets/css/signin.css') }}">
+@endsection
 
-    <div>
-        Password
-        <input type="password" name="password" id="password">
-    </div>
+@section('content')
+    <div class="container">
 
-    <div>
-        <input type="checkbox" name="remember"> Remember Me
-    </div>
+        <form class="form-signin" method="POST">
 
-    <div>
-        <button type="submit">Login</button>
+            {!! csrf_field() !!}
+
+            <h2 class="form-signin-heading">Connexion</h2>
+            <label for="inputEmail" class="sr-only">Email</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email" autofocus name="email" value="{{ old('email') }}" required>
+            <label for="inputPassword" class="sr-only">Mot de passe</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" name="password" required>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Se souvenir de moi
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
+
+            <a href="{{ route('register') }}">Pas encore inscrit ?</a>
+        </form>
+
     </div>
-</form>
-<a href="{{ route('register') }}">Pas encore inscrit ?</a>
+@endsection
