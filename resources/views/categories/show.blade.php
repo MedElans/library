@@ -3,20 +3,39 @@
 
 @section('content')
 
-    {{ Form::open(['method' => 'put', 'url' => route('admin.category.update', $category)]) }}
+    <div class="container">
 
-        {{ Form::label('name', 'Nom : ') }}
-        {{ Form::text('name', $category->name ) }}
-        {{ Form::label('parentId', 'Catégorie parente : ') }}
-        {{ Form::select('parentId', $categories, null, ['placeholder' => 'Catégorie Parente'] ) }}
-        <input type="submit" value="Modifier">
+        <div class="row">
 
-    {{ Form::close() }}
+            <div class="col-sm-12">
 
-    {{ Form::open(['method' => 'delete', 'url' => route('admin.category.destroy', $category)]) }}
+                <h1>Modifier catégorie</h1>
 
-        <input type="submit" value="Supprimer">
+                {!! BootForm::open(['model' => $category  ,'update' => 'admin.category.update']) !!}
 
-    {{ Form::close() }}
+                    {!! BootForm::text('name') !!}
+
+                    {!! BootForm::select('parentId', null, $categories, $category->parent_id ,['placeholder' => 'Catégorie Parente'] ) !!}
+
+                    {!! BootForm::submit('Modifier') !!}
+
+                {{ BootForm::close() }}
+
+
+
+                {{ BootForm::open(['method' => 'delete', 'url' => route('admin.category.destroy', $category)]) }}
+
+                    {!! BootForm::submit('Supprimer', ['class' => 'btn btn-danger']) !!}
+
+                {{ BootForm::close() }}
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
 
 @endsection

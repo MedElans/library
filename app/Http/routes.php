@@ -2,14 +2,8 @@
 
 Route::group(['middleware' => ['web']], function () {
 
-    // Authentication routes...
-    Route::get('login', 'Auth\AuthController@getLogin')->name('login');
-    Route::post('login', 'Auth\AuthController@postLogin');
-    Route::get('logout', 'Auth\AuthController@getLogout')->name('logout');
-
-    // Registration routes...
-    Route::get('register', 'Auth\AuthController@getRegister')->name('register');
-    Route::post('register', 'Auth\AuthController@postRegister');
+    // Auth routes
+    Route::auth();
 
     // Admin routes...
     Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){

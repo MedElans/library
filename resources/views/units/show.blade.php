@@ -3,18 +3,32 @@
 
 @section('content')
 
-    {{ Form::open(['method' => 'put', 'url' => route('admin.unit.update', $unit)]) }}
+    <div class="container">
 
-        {{ Form::label('name', 'Nom : ') }}
-        {{ Form::text('name', $unit->name) }}
-        <input type="submit" value="Modifier">
+        <div class="row">
 
-    {{ Form::close() }}
+            <div class="col-sm-12">
 
-    {{ Form::open(['method' => 'delete', 'url' => route('admin.unit.destroy', $unit)]) }}
+                <h1>Modifier unité</h1>
 
-        <input type="submit" value="Supprimer">
+                {!! BootForm::open(['model' => $unit  ,'update' => 'admin.unit.update']) !!}
 
-    {{ Form::close() }}
+                    {!! BootForm::text('name') !!}
+
+                    {!! BootForm::submit('Modifier') !!}
+
+                {{ BootForm::close() }}
+
+
+                {{ BootForm::open(['method' => 'delete', 'url' => route('admin.unit.destroy', $unit)]) }}
+
+                    {!! BootForm::submit('Supprimer', ['class' => 'btn btn-danger']) !!}
+
+                {{ BootForm::close() }}
+
+            </div>
+
+        </div>
+    </div>
 
 @endsection

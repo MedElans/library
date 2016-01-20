@@ -17,18 +17,8 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::all()->toArray();
-        return view('categories.index', compact('categories'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $categories = Category::lists('name', 'id');
-        return view('categories.create', compact('categories'));
+        $categoriesForForm = Category::lists('name', 'id');
+        return view('categories.index', compact('categories','categoriesForForm'));
     }
 
     /**
@@ -60,7 +50,7 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $categories = Category::lists('name', 'id');
+        $categories = Category::where('id','!=', $id)->lists('name', 'id');
         $category = Category::where(['id' => $id])->first();
         return view('categories.show', compact('category', 'categories'));
     }

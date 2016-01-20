@@ -3,20 +3,34 @@
 
 @section('content')
 
-    {{ Form::open(['method' => 'put', 'url' => route('admin.source.update', $source)]) }}
+    <div class="container">
 
-        {{ Form::label('name', 'Nom : ') }}
-        {{ Form::text('name', $source->name ) }}
-        {{ Form::label('link', 'Lien : ') }}
-        {{ Form::text('link', $source->link ) }}
-        <input type="submit" value="Modifier">
+        <div class="row">
 
-    {{ Form::close() }}
+            <div class="col-sm-12">
 
-    {{ Form::open(['method' => 'delete', 'url' => route('admin.source.destroy', $source)]) }}
+                <h1>Modifier source</h1>
 
-        <input type="submit" value="Supprimer">
+                {!! BootForm::open(['model' => $source  ,'update' => 'admin.source.update']) !!}
 
-    {{ Form::close() }}
+                    {!! BootForm::text('name') !!}
+
+                    {!! BootForm::text('link') !!}
+
+                    {!! BootForm::submit('Modifier') !!}
+
+                {{ BootForm::close() }}
+
+
+                {{ BootForm::open(['method' => 'delete', 'url' => route('admin.source.destroy', $source)]) }}
+
+                    {!! BootForm::submit('Supprimer', ['class' => 'btn btn-danger']) !!}
+
+                {{ BootForm::close() }}
+
+            </div>
+
+        </div>
+    </div>
 
 @endsection
