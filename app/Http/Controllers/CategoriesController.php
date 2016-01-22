@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Category;
+use Auth;
+use App\User;
 
 class CategoriesController extends Controller
 {
@@ -16,8 +18,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all()->toArray();
-        $categoriesForForm = Category::lists('name', 'id');
+        $categories = Category::forLoggedInUser()->get()->toArray();
+        $categoriesForForm = Category::forLoggedInUser()->lists('name', 'id');
+
         return view('categories.index', compact('categories','categoriesForForm'));
     }
 
@@ -31,12 +34,16 @@ class CategoriesController extends Controller
     {
         if(empty($request->all()['parentId']))
         {
-            $root = Category::create(['name' => $request->all()['name']]);
+            $root = new Category(['name' => $request->all()['name']]);
+            $user = User::find(Auth::id());
+            $user->categories()->save($root);
         }
         else
         {
             $root = Category::where(['id' => $request->all()['parentId']])->first();
-            $child = Category::create(['name' => $request->all()['name']]);
+            $child = new Category(['name' => $request->all()['name']]);
+            $user = User::find(Auth::id());
+            $user->categories()->save($child);
             $child->makeChildOf($root);
         }
         return redirect(route('admin.category.index'));
@@ -50,8 +57,8 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        $categories = Category::where('id','!=', $id)->lists('name', 'id');
-        $category = Category::where(['id' => $id])->first();
+        $categories = Category::forLoggedInUser()->where('id','!=', $id)->lists('name', 'id');
+        $category = Category::forLoggedInUser()->where(['id' => $id])->first();
         return view('categories.show', compact('category', 'categories'));
     }
 
@@ -64,7 +71,7 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::forLoggedInUser()->findOrFail($id);
         if(empty($request->all()['parentId']))
         {
             $category->fill(['name' => $request->all()['name']])->save();

@@ -35,6 +35,8 @@
 
                         {!! BootForm::text('link') !!}
 
+                        {!! BootForm::textarea('description') !!}
+
                         {!! BootForm::submit('Ajouter') !!}
 
                     {{ BootForm::close() }}

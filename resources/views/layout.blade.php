@@ -27,7 +27,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="{{ route('admin.dashbord') }}">Tableau de bord</a></li>
-                        <li><a href="#">Livres</a></li>
+                        <li><a href="{{ route('admin.books.index') }}">Livres</a></li>
                         <li><a href="#">Formations</a></li>
                         <li><a href="#">Articles</a></li>
                         <li><a href="#">Objectifs</a></li>

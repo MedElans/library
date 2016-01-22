@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Source;
+use Auth;
+use App\User;
 
 class SourcesController extends Controller
 {
@@ -17,7 +19,7 @@ class SourcesController extends Controller
      */
     public function index()
     {
-        $sources = Source::all();
+        $sources = Source::forLoggedInUser()->get();
         return view('sources.index', compact('sources'));
     }
 
@@ -29,7 +31,9 @@ class SourcesController extends Controller
      */
     public function store(Request $request)
     {
-        Source::create($request->all());
+        $source = new Source($request->all());
+        $user = User::find(Auth::id());
+        $user->sources()->save($source);
         return redirect(route('admin.source.index'));
     }
 
@@ -41,7 +45,7 @@ class SourcesController extends Controller
      */
     public function show($id)
     {
-        $source = Source::where(['id' => $id])->first();
+        $source = Source::forLoggedInUser()->where(['id' => $id])->first();
         return view('sources.show', compact('source'));
     }
 
@@ -54,7 +58,7 @@ class SourcesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $source = Source::findOrFail($id);
+        $source = Source::forLoggedInUser()->findOrFail($id);
         $source->fill($request->all())->save();
         return redirect(route('admin.source.index'));
     }

@@ -12,6 +12,7 @@ Route::group(['middleware' => ['web']], function () {
         Route::resource('category','CategoriesController');
         Route::resource('unit','UnitsController');
         Route::resource('source','SourcesController');
+        Route::resource('books','BooksController');
 
     });
 

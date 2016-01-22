@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Unit;
-use App\User;
-use Auth;
 
-class UnitsController extends Controller
+class BooksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,8 +16,17 @@ class UnitsController extends Controller
      */
     public function index()
     {
-        $units = Unit::forLoggedInUser()->get();
-        return view('units.index', compact('units'));
+        return view('books.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('books.create');
     }
 
     /**
@@ -31,10 +37,7 @@ class UnitsController extends Controller
      */
     public function store(Request $request)
     {
-        $unit = new Unit($request->all());
-        $user = User::find(Auth::id());
-        $user->units()->save($unit);
-        return redirect(route('admin.unit.index'));
+        //
     }
 
     /**
@@ -45,8 +48,18 @@ class UnitsController extends Controller
      */
     public function show($id)
     {
-        $unit = Unit::forLoggedInUser()->where(['id' => $id])->first();
-        return view('units.show', compact('unit'));
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
     }
 
     /**
@@ -58,9 +71,7 @@ class UnitsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $unit = Unit::forLoggedInUser()->findOrFail($id);
-        $unit->fill($request->all())->save();
-        return redirect(route('admin.unit.index'));
+        //
     }
 
     /**
@@ -71,7 +82,6 @@ class UnitsController extends Controller
      */
     public function destroy($id)
     {
-        Unit::destroy($id);
-        return redirect(route('admin.unit.index'));
+        //
     }
 }
