@@ -10,10 +10,44 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2016-01-22 11:27:51
+Date: 2016-01-23 06:59:47
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for books
+-- ----------------------------
+DROP TABLE IF EXISTS `books`;
+CREATE TABLE `books` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `link` text COLLATE utf8_unicode_ci NOT NULL,
+  `category_id` int(10) unsigned DEFAULT NULL,
+  `counter` tinyint(1) NOT NULL,
+  `total` int(11) NOT NULL,
+  `unit_id` int(10) unsigned DEFAULT NULL,
+  `image` text COLLATE utf8_unicode_ci NOT NULL,
+  `source_id` int(10) unsigned DEFAULT NULL,
+  `user_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NOT NULL,
+  `updated_at` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `books_category_id_foreign` (`category_id`),
+  KEY `books_source_id_foreign` (`source_id`),
+  KEY `books_unit_id_foreign` (`unit_id`),
+  KEY `books_user_id_foreign` (`user_id`),
+  CONSTRAINT `books_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `books_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `books_source_id_foreign` FOREIGN KEY (`source_id`) REFERENCES `sources` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `books_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
+-- Records of books
+-- ----------------------------
+INSERT INTO `books` VALUES ('7', 'Quran', '', '', '5', '0', '0', '2', '56a324b2e0b37.jpg', null, '3', '2016-01-23 06:58:58', '2016-01-23 06:58:58');
 
 -- ----------------------------
 -- Table structure for categories
@@ -35,7 +69,7 @@ CREATE TABLE `categories` (
   KEY `categories_rgt_index` (`rgt`),
   KEY `categories_user_id_foreign` (`user_id`),
   CONSTRAINT `categories_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- ----------------------------
 -- Records of categories
@@ -62,7 +96,8 @@ INSERT INTO `migrations` VALUES ('2016_01_03_032719_create_categories_table', '2
 INSERT INTO `migrations` VALUES ('2016_01_03_082934_create_units_table', '3');
 INSERT INTO `migrations` VALUES ('2016_01_03_083538_create_sources_table', '3');
 INSERT INTO `migrations` VALUES ('2016_01_22_102449_add_description_source_table', '4');
-INSERT INTO `migrations` VALUES ('2016_01_22_103405_add_user_id', '5');
+INSERT INTO `migrations` VALUES ('2016_01_22_103405_add_user_id_table', '5');
+INSERT INTO `migrations` VALUES ('2016_01_23_043728_add_books_table', '6');
 
 -- ----------------------------
 -- Table structure for password_resets

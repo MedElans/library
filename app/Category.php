@@ -13,6 +13,10 @@ class Category extends Node
         return $this->belongTo('App\User');
     }
 
+    public function books(){
+        return $this->hasMany('App\Book');
+    }
+
     public function scopeForLoggedInUser($query)
     {
         return $query->where('user_id', Auth::id());
